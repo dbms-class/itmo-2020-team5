@@ -7,8 +7,13 @@ DROP TABLE IF EXISTS Supply;
 DROP TABLE IF EXISTS Distributor;
 DROP TABLE IF EXISTS Pharmacy;
 
-CREATE TABLE Pharmacy(id SERIAL PRIMARY KEY, name text NOT NULL); --TODO: Это просто заглушка к таблице аптеки
+CREATE TABLE Cars(id SERIAL PRIMARY KEY, name text NOT NULL); --TODO: Это просто заглушка к таблице машины
 CREATE TABLE Medicine(id SERIAL PRIMARY KEY, name text NOT NULL); --TODO: Тоже заглушка к таблице лекарства
+CREATE TABLE Pharmacy(id SERIAL PRIMARY KEY, address TEXT UNIQUE NOT NULL, number_people TEXT UNIQUE);
+CREATE TABLE Warehouse(id INT PRIMARY KEY, address TEXT NOT NULL UNIQUE);
+CREATE TABLE Acceptance(id_car INT REFERENCES Cars NOT NULL, id_warehouse INT REFERENCES Warehouse NOT NULL, time TIME NOT NULL, date DATE NOT NULL, surname TEXT NOT NULL, UNIQUE(time, date, surname));
+
+
 
 CREATE TYPE Form as ENUM ('PILL', 'CAPSULE', 'AMPOULE');
 CREATE TABLE Laboratory(id SERIAL PRIMARY KEY, name text NOT NULL check ( length(name) > 0 ), head_last_name text NOT NULL check ( length(head_last_name) > 0 ));
