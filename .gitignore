@@ -1,3 +1,2 @@
 .idea/
-app/.idea/
-app/project0/.idea
+__pycache__
