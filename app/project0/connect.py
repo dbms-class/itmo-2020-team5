@@ -19,7 +19,7 @@ def parse_cmd_line():
     parser.add_argument('--pg-host', help='PostgreSQL host name', default='localhost')
     parser.add_argument('--pg-port', help='PostgreSQL port', default=5432)
     parser.add_argument('--pg-user', help='PostgreSQL user', default='postgres')
-    parser.add_argument('--pg-password', help='PostgreSQL password', default='')
+    parser.add_argument('--pg-password', help='PostgreSQL password', default='iziparol')
     parser.add_argument('--pg-database', help='PostgreSQL database', default='pharmacy')
     parser.add_argument('--sqlite-file', help='SQLite3 database file. Type :memory: to use in-memory SQLite3 database',
                         default='sqlite.db')
@@ -39,7 +39,7 @@ def create_connection_sqlite(args):
 # Создаёт подключение в соответствии с аргументами командной строки.
 # Если указан аргумент --sqlite-file то создается подключение к SQLite,
 # в противном случае создаётся подключение к PostgreSQL
-def create_connection(args):
+def create_connection(args) -> pg_driver._psycopg.connection:
     return create_connection_pg(args)
 
 

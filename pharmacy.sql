@@ -49,7 +49,7 @@ CREATE TABLE Medicine
     laboratory_id       INT REFERENCES Laboratory,
     medicine_form       FORM,
     certificate_id      INT REFERENCES Certificate,
-    active_substance_id INT REFERENCES ActiveSubstance
+    active_substance_id INT REFERENCES ActiveSubstance NOT NULL
 );
 
 
@@ -117,8 +117,8 @@ CREATE TABLE Assortment_pharmacy
 (
     pharmacy_id             INT REFERENCES Pharmacy,
     medicine_id             INT REFERENCES Medicine,
-    release_packaging_count INT,
-    cost                    money NOT NULL, --check ( length(number_of_medications) >= 0 and length(cost) > 0 ),
+    release_packaging_count INT,                        -- остаток
+    cost                    money NOT NULL,             -- check ( length(number_of_medications) >= 0 and length(cost) > 0 ),
     PRIMARY KEY (pharmacy_id, medicine_id)
 );
 
@@ -150,11 +150,21 @@ CREATE TABLE Acceptance
     storekeeper_last_name      TEXT NOT NULL
 );
 
+INSERT INTO ActiveSubstance(name, formula) VALUES ('Аденин', 'АААААЫФВЦ'),
+                                                  ('АПРЕПИТАНТ', 'УУАУА') ,
+                                                  ('ИБОПРОФЕН', 'АСС'),
+                                                  ('ПЛАЦЕБО', '32'),
+                                                  ('АСПАРАГИНАЗА', '123');
 INSERT INTO Laboratory (name, head_last_name) VALUES ('HELIX', 'Иванов');
 INSERT INTO Certificate(laboratory_id, expiration_date) VALUES(1, '20-12-2022');
 INSERT INTO Distributor(address, bank_account_number, contact_first_name, contact_last_name, phone_number) VALUES ('Улица пушкина, дом колотушкина', '40817810570000123456', 'Иван', 'Иванов', '+79142231602');
-INSERT INTO Medicine(name) VALUES ('Парацетамол');
-INSERT INTO Medicine(name) VALUES ('Арбидол');
+INSERT INTO Medicine(name, active_substance_id) VALUES ('Парацетамол', 1),
+                                                        ('Арбидол', 2);
 INSERT INTO Pharmacy(address, name) VALUES('Аптека', 'Аптека за углом №7');
+INSERT INTO Pharmacy(address, name) VALUES('Аптека2', 'Аптека за углом №14');
 INSERT INTO Warehouse(address) VALUES ('Улица пушкина 1');
 INSERT INTO Supply(distributor_id, warehouse_id, arrival_datetime, arrival_storekeeper_surname) VALUES (1, 1, '20-11-2020 20:30', 'Иванов');
+
+INSERT INTO Assortment_pharmacy(pharmacy_id, medicine_id, release_packaging_count, cost) VALUES (1, 1, 100, 10),
+                                                                                                (1, 2, 22, 66),
+                                                                                                (2, 1, 25, 50);
