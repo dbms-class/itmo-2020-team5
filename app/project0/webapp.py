@@ -59,6 +59,36 @@ class App(object):
                         (pharmacy_id, drug_id, remainder, price, remainder, price))
             return "ok"
 
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def drugs(self, id = None):
+        with create_connection(self.args) as db:
+            cur = db.cursor()
+            if id is None:
+                cur.execute("SELECT id, name, active_substance_id FROM Medicine M")
+            else:
+                cur.execute("SELECT id, name, active_substance_id FROM Medicine WHERE id= %s", id)
+            result = []
+            drugs = cur.fetchall()
+            for p in drugs:
+                result.append({"id": p[0], "name": p[1], "inn": p[2]})
+            return result
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def pharmacies(self, id = None):
+        with create_connection(self.args) as db:
+            cur = db.cursor()
+            if id is None:
+                cur.execute("SELECT id, name, address FROM Pharmacy P")
+            else:
+                cur.execute("SELECT id, name, address FROM Pharmacy WHERE id= %s", id)
+            pharmacies = []
+            pharmacies = cur.fetchall()
+            for p in pharmacies:
+                result.append({"id": p[0], "name": p[1], "address": p[2]})
+            return result
+
 
 cherrypy.config.update({
   'server.socket_host': '0.0.0.0',
