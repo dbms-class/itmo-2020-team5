@@ -149,21 +149,31 @@ CREATE TABLE Acceptance
     datetime     TIMESTAMP NOT NULL,
     storekeeper_last_name      TEXT NOT NULL
 );
-
+INSERT INTO Manufacturer(name) VALUES ('Рош-Москва'),
+                                      ('MSD'),
+                                      ('Байер'),
+                                      ('АстраЗенека');
 INSERT INTO ActiveSubstance(name, formula) VALUES ('Аденин', 'АААААЫФВЦ'),
                                                   ('АПРЕПИТАНТ', 'УУАУА') ,
                                                   ('ИБОПРОФЕН', 'АСС'),
                                                   ('ПЛАЦЕБО', '32'),
                                                   ('АСПАРАГИНАЗА', '123');
-INSERT INTO Laboratory (name, head_last_name) VALUES ('HELIX', 'Иванов');
+INSERT INTO Laboratory (name, head_last_name) VALUES ('HELIX', 'Иванов'), ('Еврофарм', 'Петров');
 INSERT INTO Certificate(laboratory_id, expiration_date) VALUES(1, '20-12-2022');
 INSERT INTO Distributor(address, bank_account_number, contact_first_name, contact_last_name, phone_number) VALUES ('Улица пушкина, дом колотушкина', '40817810570000123456', 'Иван', 'Иванов', '+79142231602');
 INSERT INTO Medicine(name, active_substance_id) VALUES ('Парацетамол', 1),
                                                         ('Арбидол', 2);
 INSERT INTO Pharmacy(address, name) VALUES('Аптека', 'Аптека за углом №7');
 INSERT INTO Pharmacy(address, name) VALUES('Аптека2', 'Аптека за углом №14');
+
 INSERT INTO Warehouse(address) VALUES ('Улица пушкина 1');
 INSERT INTO Supply(distributor_id, warehouse_id, arrival_datetime, arrival_storekeeper_surname) VALUES (1, 1, '20-11-2020 20:30', 'Иванов');
+
+INSERT INTO Cars(maintenance) VALUES ('19-11-2020'), ('19-12-2010'), ('07-08-2013');
+INSERT INTO ShippingBox(medicine_id, package_weight_gr, release_packaging_count, price_rub) VALUES (1, 200, 4, 44);
+INSERT INTO Transportation(car_id, date, warehouse_id, shipping_box_id, medicine_id, pharmacy_id, number_of_medications) VALUES (1,'19-11-2020', 1, 1, 1, 1, 100);
+
+INSERT INTO SuplyContent(supply_id, shipping_box_id, shipping_box_count) VALUES (1, 1, 100);
 
 INSERT INTO Assortment_pharmacy(pharmacy_id, medicine_id, release_packaging_count, cost) VALUES (1, 1, 100, 10),
                                                                                                 (1, 2, 22, 66),
